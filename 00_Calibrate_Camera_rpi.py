@@ -7,15 +7,12 @@ from picamera2 import Picamera2
 
 # Set parameters
 CHESSBOARD_SIZE = (9, 6)  # Adjust based on your board
-OUTPUT_FOLDER = "chessboard_images"
 PREVIEW_FOLDER = "chessboard_preview"
 CALIBRATION_FILE_JSON = "camera_calibration.json"
-CALIBRATION_FILE_NPZ = "camera_calibration.npz"
-MAX_IMAGES = 100
-MIN_TIME_BETWEEN_CAPTURES = 0.2  # Minimum 0.2 seconds between captures
+MAX_IMAGES = 50
+MIN_TIME_BETWEEN_CAPTURES = 0.001  # Minimum 0.2 seconds between captures
 
 # Ensure output directories exist
-os.makedirs(OUTPUT_FOLDER, exist_ok=True)
 os.makedirs(PREVIEW_FOLDER, exist_ok=True)
 
 # Initialize camera
@@ -28,7 +25,6 @@ square_size = 20.0  # Square size in mm
 
 objp = np.zeros((CHESSBOARD_SIZE[0] * CHESSBOARD_SIZE[1], 3), np.float32)
 objp[:, :2] = np.mgrid[0:CHESSBOARD_SIZE[0], 0:CHESSBOARD_SIZE[1]].T.reshape(-1, 2) * square_size
-
 
 # Lists to store detected corners
 obj_points = []  # 3D points in real world
@@ -53,11 +49,7 @@ while image_count < MAX_IMAGES:
 
         # Ensure at least 0.2 seconds between captures
         if current_time - last_capture_time >= MIN_TIME_BETWEEN_CAPTURES:
-            image_filename = os.path.join(OUTPUT_FOLDER, f"chessboard_{image_count:03d}.jpg")
             preview_filename = os.path.join(PREVIEW_FOLDER, f"preview_{image_count:03d}.jpg")
-
-            # Save the full image
-            picam2.capture_file(image_filename)
 
             # Refine corners for better accuracy
             refined_corners = cv2.cornerSubPix(
@@ -74,7 +66,7 @@ while image_count < MAX_IMAGES:
             cv2.drawChessboardCorners(frame_with_corners, CHESSBOARD_SIZE, refined_corners, ret)
             cv2.imwrite(preview_filename, frame_with_corners)
 
-            print(f"✅ Chessboard detected! Image saved: {image_filename}")
+            print(f"✅ Chessboard detected! Image saved: {preview_filename}")
 
             image_count += 1
             last_capture_time = current_time
@@ -101,10 +93,7 @@ if len(obj_points) > 5:
         with open(CALIBRATION_FILE_JSON, "w") as json_file:
             json.dump(calibration_data, json_file, indent=4)
 
-        # Also save in NumPy format for direct loading in OpenCV
-        np.savez(CALIBRATION_FILE_NPZ, camera_matrix=camera_matrix, distortion_coeffs=distortion_coeffs)
-
-        print(f"\n💾 Calibration data saved to '{CALIBRATION_FILE_JSON}' and '{CALIBRATION_FILE_NPZ}'.")
+        print(f"\n💾 Calibration data saved to '{CALIBRATION_FILE_JSON}'.")
 
     else:
         print("⚠️ Calibration failed. Not enough valid chessboard detections.")

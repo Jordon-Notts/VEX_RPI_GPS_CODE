@@ -42,6 +42,7 @@ def detect_camera_position():
 
     if ids is not None:
         for i, marker_id in enumerate(ids):
+
             marker_corners = corners[i][0]
 
             # Define real-world object points for the marker
@@ -63,9 +64,9 @@ def detect_camera_position():
                 camera_position = -np.dot(R.T, tvec)
 
                 print(f"\n🔍 Marker ID: {marker_id[0]}")
-                print(f"📍 Camera Position (X, Y, Z) relative to marker (in mm): {camera_position.ravel()}")
+                # print(f"📍 Camera Position (X, Y, Z) relative to marker (in mm): {camera_position.ravel()}")
                 print(f"📍 Marker Position (X, Y, Z) relative to camera (in mm): {tvec.ravel()}")
-                print(f"🔄 Camera Rotation Vector: {rvec.ravel()}")
+                print(f"🔄 Marker Rotation Vector: {rvec.ravel()}")
 
                 # ✅ Ensure marker corners have the correct shape (4,1,2) and IDs are integers
                 cv2.aruco.drawDetectedMarkers(frame, [marker_corners.reshape((4, 1, 2))], np.array([[ids[i][0]]], dtype=np.int32))
