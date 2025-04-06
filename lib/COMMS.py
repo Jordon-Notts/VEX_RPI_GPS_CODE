@@ -77,8 +77,9 @@ def send_to_vex_brain(x, y, angle):
     GPIO.output(DATA_Y_PIN, GPIO.LOW)
     GPIO.output(DATA_ANGLE_PIN, GPIO.LOW)
 
-    print(f"Transmitted: X={x}, Y={y}, Angle={angle/10.0}°")
-
+    print
+    
+    
 if __name__ == '__main__':
 
     import RPi.GPIO as GPIO
