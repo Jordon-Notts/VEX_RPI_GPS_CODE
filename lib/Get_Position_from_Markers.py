@@ -248,6 +248,12 @@ def save_map(cam_pos, yaw):
     print(f"Map image saved as {map_filename}")
     return map_img
 
+
+def kill_camera():
+    picam2.stop()
+    print()
+    print('PI Camara Killed')
+
 # -----------------------------------------------------------
 # Main
 # -----------------------------------------------------------
@@ -266,4 +272,4 @@ if __name__ == "__main__":
     except KeyboardInterrupt:
         print("CTRL+C pressed. Exiting.")
     finally:
-        picam2.stop()
+        kill_camera()

@@ -125,7 +125,7 @@ if __name__ == '__main__':
     # -------------------------
     # When the request pin goes LOW (rising edge when coming back to HIGH after being pulled LOW),
     # the callback function is triggered.
-    GPIO.add_event_detect(REQUEST_PIN, GPIO.RISING, callback=handle_request, bouncetime=200)
+    GPIO.add_event_detect(REQUEST_PIN, GPIO.RISING, callback=handle_request)
 
     # -------------------------
     # Main Loop
