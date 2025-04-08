@@ -16,11 +16,26 @@ In the world of OpenCV, the pose of an object is the objects rotation and orient
 
 ```bash
 
-wget https://github.com/Jordon-Notts/VEX_RPI_GPS_CODE/archive/refs/heads/main.zip
-unzip main.zip
+sudo apt update
 
-sudo apt install python3-pip
+sudo apt upgrade -y
 
-pip install -r requirements.txt
+sudo apt install python3-full
+
+sudo apt install python3-libcamera libcamera-dev
+
+sudo apt install python3-picamera2 -y # pip didnt work for this one
+
+sudo apt install python3-opencv
+
+sudo apt install python3-flask -y
+
+wget https://github.com/Jordon-Notts/VEX_RPI_GPS_CODE/archive/refs/heads/RPI_CODE.zip
+
+unzip RPI_CODE.zip
+
+cd VEX_RPI_GPS_CODE-RPI_CODE
+
+sudo pip3 install packaging --break-system-packages
 
 ```

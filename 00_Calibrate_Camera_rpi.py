@@ -17,7 +17,7 @@ os.makedirs(PREVIEW_FOLDER, exist_ok=True)
 
 # Initialize camera
 picam2 = Picamera2()
-picam2.configure(picam2.create_still_configuration(main={"size": (1280, 720)}))  # Lower resolution for faster processing
+picam2.configure(picam2.create_still_configuration(main={"size": (1280, 720), "format": "RGB888"}))  # Lower resolution for faster processing
 picam2.start()
 
 # Prepare object points (3D coordinates of chessboard corners)

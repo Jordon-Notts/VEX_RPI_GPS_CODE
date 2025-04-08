@@ -8,6 +8,22 @@ from datetime import datetime
 from picamera2 import Picamera2
 import math
 
+from packaging import version
+
+USE_ARUCO_DETECTOR_CLASS = False
+
+# Setup ArUco dictionary
+aruco_dict = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_4X4_50)
+
+# Setup parameters and decide which detection API to use
+try:
+    aruco_params = cv2.aruco.DetectorParameters()
+    if version.parse(cv2.__version__) >= version.parse("4.7.0") and hasattr(cv2.aruco, "ArucoDetector"):
+        USE_ARUCO_DETECTOR_CLASS = True
+except Exception as e:
+    print("⚠️ Warning: Failed to create DetectorParameters, falling back to default detection.")
+    aruco_params = None
+
 # -----------------------------------------------------------
 # Configuration / Paths
 # -----------------------------------------------------------
@@ -38,12 +54,6 @@ with open(MARKER_DB_FILE, "r") as f:
     marker_db = json.load(f)
 
 # -----------------------------------------------------------
-# 3) Setup ArUco Detector
-# -----------------------------------------------------------
-aruco_dict = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_4X4_50)
-aruco_params = cv2.aruco.DetectorParameters()
-
-# -----------------------------------------------------------
 # 4) Initialize PiCamera2 (outside functions for fast capture)
 # -----------------------------------------------------------
 picam2 = Picamera2()
@@ -67,9 +77,16 @@ def get_position_from_markers():
     # frame = cv2.flip(frame, 1)
     
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-    detector = cv2.aruco.ArucoDetector(aruco_dict, aruco_params)
-    corners, ids, _ = detector.detectMarkers(gray)
-    
+
+    if USE_ARUCO_DETECTOR_CLASS and aruco_params is not None:
+        detector = cv2.aruco.ArucoDetector(aruco_dict, aruco_params)
+        corners, ids, _ = detector.detectMarkers(gray)
+    else:
+        if aruco_params is not None:
+            corners, ids, _ = cv2.aruco.detectMarkers(gray, aruco_dict, parameters=aruco_params)
+        else:
+            corners, ids, _ = cv2.aruco.detectMarkers(gray, aruco_dict)
+
     computed_pose = None
     if ids is not None and len(ids) > 0:
         # Refine corners for each detected marker.

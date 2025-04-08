@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 import RPi.GPIO as GPIO
 import time
-from lib.COMMS import send_to_vex_brain, kill_camera
-from lib.Get_Position_from_Markers import get_position_from_markers
+from lib.COMMS import send_to_vex_brain
+from lib.Get_Position_from_Markers import get_position_from_markers, kill_camera
 
 # -------------------------
 # GPIO Pin Definition
