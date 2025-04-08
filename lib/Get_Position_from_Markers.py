@@ -11,6 +11,7 @@ import math
 from packaging import version
 
 USE_ARUCO_DETECTOR_CLASS = False
+aruco_params = None
 
 # Setup ArUco dictionary
 aruco_dict = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_4X4_50)
@@ -22,7 +23,6 @@ try:
         aruco_params = cv2.aruco.DetectorParameters()
 except Exception as e:
     print("⚠️ Warning: Failed to create DetectorParameters, falling back to default detection.")
-    aruco_params = None
 
 # -----------------------------------------------------------
 # Configuration / Paths
