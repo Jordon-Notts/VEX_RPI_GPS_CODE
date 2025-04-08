@@ -17,9 +17,9 @@ aruco_dict = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_4X4_50)
 
 # Setup parameters and decide which detection API to use
 try:
-    aruco_params = cv2.aruco.DetectorParameters()
     if version.parse(cv2.__version__) >= version.parse("4.7.0") and hasattr(cv2.aruco, "ArucoDetector"):
         USE_ARUCO_DETECTOR_CLASS = True
+        aruco_params = cv2.aruco.DetectorParameters()
 except Exception as e:
     print("⚠️ Warning: Failed to create DetectorParameters, falling back to default detection.")
     aruco_params = None
