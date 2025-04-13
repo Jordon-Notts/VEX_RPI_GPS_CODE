@@ -8,7 +8,7 @@ from lib.Get_Position_from_Markers import get_position_from_markers, make_map_im
 from lib.COMMS import send_to_vex_brain
 import RPi.GPIO as GPIO
 
-UPDATE_TIME_SECONDS = 0.5
+UPDATE_TIME_SECONDS = 0.2
 
 app = Flask(__name__)
 

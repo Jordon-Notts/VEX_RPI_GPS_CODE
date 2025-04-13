@@ -57,7 +57,7 @@ with open(MARKER_DB_FILE, "r") as f:
 # 4) Initialize PiCamera2 (outside functions for fast capture)
 # -----------------------------------------------------------
 picam2 = Picamera2()
-config = picam2.create_still_configuration(main={"size": (1280, 720), "format": "RGB888"})
+config = picam2.create_still_configuration(main={"size": (640, 480), "format": "RGB888"})
 picam2.configure(config)
 picam2.start()
 time.sleep(1)  # Allow camera to warm up

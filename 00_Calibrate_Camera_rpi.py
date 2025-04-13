@@ -9,7 +9,7 @@ from picamera2 import Picamera2
 CHESSBOARD_SIZE = (9, 6)  # Adjust based on your board
 PREVIEW_FOLDER = "chessboard_preview"
 CALIBRATION_FILE_JSON = "camera_calibration.json"
-MAX_IMAGES = 50
+MAX_IMAGES = 20
 MIN_TIME_BETWEEN_CAPTURES = 0.001  # Minimum 0.2 seconds between captures
 
 # Ensure output directories exist
@@ -17,7 +17,7 @@ os.makedirs(PREVIEW_FOLDER, exist_ok=True)
 
 # Initialize camera
 picam2 = Picamera2()
-picam2.configure(picam2.create_still_configuration(main={"size": (1280, 720), "format": "RGB888"}))  # Lower resolution for faster processing
+picam2.configure(picam2.create_still_configuration(main={"size": (640, 480), "format": "RGB888"}))  # Lower resolution for faster processing
 picam2.start()
 
 # Prepare object points (3D coordinates of chessboard corners)
@@ -42,9 +42,23 @@ while image_count < MAX_IMAGES:
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
     # Try to detect chessboard
-    ret, corners = cv2.findChessboardCorners(gray, CHESSBOARD_SIZE, None)
+
+    # print('PING')
+
+    gray_small = cv2.resize(gray, (0, 0), fx=0.5, fy=0.5)
+
+    ret, corners = cv2.findChessboardCorners(
+        gray_small,
+        CHESSBOARD_SIZE,
+        flags=cv2.CALIB_CB_FAST_CHECK
+    )
+
+    # print('PONG')
 
     if ret:
+    
+        corners = corners * 2  # Scale back up
+
         current_time = time.time()
 
         # Ensure at least 0.2 seconds between captures
