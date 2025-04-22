@@ -43,8 +43,6 @@ while image_count < MAX_IMAGES:
 
     # Try to detect chessboard
 
-    # print('PING')
-
     gray_small = cv2.resize(gray, (0, 0), fx=0.5, fy=0.5)
 
     ret, corners = cv2.findChessboardCorners(
@@ -52,8 +50,6 @@ while image_count < MAX_IMAGES:
         CHESSBOARD_SIZE,
         flags=cv2.CALIB_CB_FAST_CHECK
     )
-
-    # print('PONG')
 
     if ret:
     

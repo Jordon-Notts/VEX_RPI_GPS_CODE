@@ -2,18 +2,19 @@ import RPi.GPIO as GPIO
 import time
 import requests
 
-url = "http://10.15.171.6:5000/robot1"
+url = "http://192.168.1.70:8000/robot1"
 
 # -------------------------
 # GPIO Pin Definitions (using BCM numbering)
 # -------------------------
 
-REQUEST_PIN    = 17   # Input: Triggered when pulled LOW
-CS_PIN         = 27   # Output: Chip Select for transmission
-CLOCK_PIN      = 22   # Output: Clock for parallel transmission
-DATA_X_PIN     = 23   # Output: Data for X coordinate
-DATA_Y_PIN     = 24   # Output: Data for Y coordinate
-DATA_ANGLE_PIN = 25   # Output: Data for Angle
+CS_PIN         = 26   # Output: Chip Select for transmission
+CLOCK_PIN      = 19   # Output: Clock for parallel transmission
+DATA_X_PIN     = 13   # Output: Data for X coordinate
+DATA_Y_PIN     = 6  # Output: Data for Y coordinate
+DATA_ANGLE_PIN = 5   # Output: Data for Angle
+
+REQUEST_PIN    = 21   # Input: Triggered when pulled LOW
 
 # -------------------------
 # Timing Configuration

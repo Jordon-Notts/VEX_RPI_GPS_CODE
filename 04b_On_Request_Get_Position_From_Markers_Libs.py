@@ -7,7 +7,7 @@ from lib.Get_Position_from_Markers import get_position_from_markers, kill_camera
 # -------------------------
 # GPIO Pin Definition
 # -------------------------
-REQUEST_PIN = 17   # Input: Triggered when pulled LOW
+REQUEST_PIN = 21   # Input: Triggered when pulled LOW
 
 def handle_request(channel):
     """
@@ -15,7 +15,10 @@ def handle_request(channel):
     Retrieves the camera's position and yaw using get_position_from_markers(),
     converts the values to the appropriate format, and transmits them.
     """
+    print('Request for possition made!')
+    
     pos, yaw = get_position_from_markers()
+    
     if pos is not None:
         print(f"\n[RESULT] Camera Position: {pos}")
         print(f"[RESULT] Camera Yaw: {yaw:.1f} deg")
@@ -28,6 +31,7 @@ def handle_request(channel):
         print("Failed to determine camera pose.")
 
 if __name__ == '__main__':
+
     GPIO.setmode(GPIO.BCM)
     GPIO.setup(REQUEST_PIN, GPIO.IN, pull_up_down=GPIO.PUD_OFF)
 

@@ -3,7 +3,7 @@ import time
 from lib.COMMS import *
 from lib.Get_Position_from_Server import *
 
-URL = "http://yourserver:port/yourendpoint"  # Replace with your actual URL
+URL = "http://192.168.1.70:5000/robot/1"  # Replace with your actual URL
 
 def handle_request(channel):
     """
@@ -29,7 +29,7 @@ if __name__ == '__main__':
 
     import RPi.GPIO as GPIO
 
-    REQUEST_PIN    = 17   # Input: Triggered when pulled LOW
+    REQUEST_PIN    = 21   # Input: Triggered when pulled LOW
     # Setup the request pin (if you have an internal pull-up, you can use PUD_UP)
     GPIO.setup(REQUEST_PIN, GPIO.IN, pull_up_down=GPIO.PUD_OFF)
 

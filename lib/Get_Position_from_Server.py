@@ -11,9 +11,9 @@ def GET_position_from_server(url):
 
         data = response.json()
         # Expected JSON structure: {"id": 1, "global_position": [x, y, z], "yaw": yaw_deg}
-        x = data["global_position"][0]
-        y = data["global_position"][1]
-        yaw = data["yaw"]
+        x = data["position"][0]
+        y = data["position"][1]
+        yaw = data["yaw_deg"]
 
         # Ensure the yaw angle is non-negative (if negative, adjust by adding 360°)
         if yaw < 0:
@@ -38,7 +38,7 @@ def GET_position_from_server(url):
 
 if __name__ == '__main__':
 
-    URL = "http://yourserver:port/yourendpoint"  # Replace with your actual URL
+    URL = "http://192.168.1.70:5000/robot/1"  # Replace with your actual URL
 
     result = GET_position_from_server(URL)
     if result:

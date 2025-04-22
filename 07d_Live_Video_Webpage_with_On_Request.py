@@ -91,7 +91,7 @@ def pose_info():
 # -----------------------------------------------------------
 # GPIO Setup for VEX Brain Request
 # -----------------------------------------------------------
-REQUEST_PIN = 17  # Input: Triggered by the VEX brain
+REQUEST_PIN = 21  # Input: Triggered by the VEX brain
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(REQUEST_PIN, GPIO.IN, pull_up_down=GPIO.PUD_OFF)

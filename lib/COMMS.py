@@ -5,12 +5,13 @@ import time
 # GPIO Pin Definitions (using BCM numbering)
 # -------------------------
 
-CS_PIN         = 27   # Output: Chip Select for transmission
-CLOCK_PIN      = 22   # Output: Clock for parallel transmission
-DATA_X_PIN     = 23   # Output: Data for X coordinate
-DATA_Y_PIN     = 24   # Output: Data for Y coordinate
-DATA_ANGLE_PIN = 25   # Output: Data for Angle
+CS_PIN         = 26   # Output: Chip Select for transmission
+CLOCK_PIN      = 19   # Output: Clock for parallel transmission
+DATA_X_PIN     = 13   # Output: Data for X coordinate
+DATA_Y_PIN     = 6  # Output: Data for Y coordinate
+DATA_ANGLE_PIN = 5   # Output: Data for Angle
 
+REQUEST_PIN    = 21   # Input: Triggered when pulled LOW
 # -------------------------
 # Timing Configuration
 # -------------------------
@@ -77,14 +78,13 @@ def send_to_vex_brain(x, y, angle):
     GPIO.output(DATA_Y_PIN, GPIO.LOW)
     GPIO.output(DATA_ANGLE_PIN, GPIO.LOW)
 
-    print
+    print (f'SEND X = {x}, Y = {y}, Angle = {angle}')
     
     
 if __name__ == '__main__':
 
     import RPi.GPIO as GPIO
 
-    REQUEST_PIN    = 17   # Input: Triggered when pulled LOW
     # Setup the request pin (if you have an internal pull-up, you can use PUD_UP)
     GPIO.setup(REQUEST_PIN, GPIO.IN, pull_up_down=GPIO.PUD_OFF)
 
